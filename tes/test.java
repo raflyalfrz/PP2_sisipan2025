@@ -1,9 +1,8 @@
-private JTextField txtNpm;
-private JTextField txtNama;
-private JTextArea txtAlamat;
+Object[] dataMataKuliah = {
+    kode,
+    nama,
+    semester,
+    kesulitan
+};
 
-private JRadioButton radioLaki;
-private JRadioButton radioPerempuan;
-private ButtonGroup groupJenisKelamin;
-
-private JComboBox<String> comboProdi;
+modelTable.addRow(dataMataKuliah);
