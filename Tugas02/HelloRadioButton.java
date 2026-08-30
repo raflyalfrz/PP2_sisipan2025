@@ -62,11 +62,30 @@ public class HelloRadioButton extends JFrame {
         JScrollPane scrollPaneTabungan = new JScrollPane(listTabungan);
         scrollPaneTabungan.setBounds(15,290,200,80);
 
+        JLabel labelFrekuensi = new JLabel("Frekuensi Transaksi per Bulan:");
+        labelFrekuensi.setBounds(20, 380, 250, 20);
+
+        SpinnerNumberModel modelFrekuensi = new SpinnerNumberModel(1, 1, 100, 1);
+        JSpinner spinnerFrekuensi = new JSpinner(modelFrekuensi);
+        spinnerFrekuensi.setBounds(20, 405, 250, 35);
+
+        JLabel labelPassword = new JLabel("Password:");
+        labelPassword.setBounds(350,265,200,20);
+
+        JPasswordField passwordField = new JPasswordField();
+        passwordField.setBounds(350,290,200,30);
+
+        JLabel labelConfirmPassword = new JLabel("Confirm Password:");
+        labelConfirmPassword.setBounds(350,330,200,20);
+
+        JPasswordField confirmPasswordField = new JPasswordField();
+        confirmPasswordField.setBounds(350,355,200,30);
+
         JButton button = new JButton("Simpan");
-        button.setBounds(15,385,100,40);
+        button.setBounds(20, 455, 100, 40);
 
         JTextArea txtOutput = new JTextArea("");
-        txtOutput.setBounds(15,430,550,100);
+       txtOutput.setBounds(20, 510, 690, 125);
 
         menuExit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -80,6 +99,9 @@ public class HelloRadioButton extends JFrame {
                 radioButton1.setSelected(true);
                 checkBox.setSelected(false);
                 listTabungan.clearSelection();
+                spinnerFrekuensi.setValue(1);
+                passwordField.setText("");
+                confirmPasswordField.setText("");
                 txtOutput.setText("");
             }
         });
@@ -99,11 +121,24 @@ public class HelloRadioButton extends JFrame {
                 String nama = textField.getText();
                 String nomorHP = textFieldNomorHP.getText();
                 String tabungan = listTabungan.getSelectedValue();
+                int frekuensi = (Integer) spinnerFrekuensi.getValue();
+                String password = new String(passwordField.getPassword());
+                String confirmPassword = new String(confirmPasswordField.getPassword());
+
+                String statusPassword;
+
+                if(password.equals(confirmPassword)){
+                    statusPassword = "Cocok";
+                }else{
+                    statusPassword = "Tidak Cocok";
+                }
 
                 txtOutput.append("Nama\t\t: "+nama+"\n");
                 txtOutput.append("Nomor HP\t\t: "+nomorHP+"\n");
                 txtOutput.append("Jenis Kelamin\t\t: "+jenisKelamin+"\n");
                 txtOutput.append("Jenis Tabungan\t\t: "+tabungan+"\n");
+                txtOutput.append("Frekuensi Transaksi\t: "+frekuensi+" kali/bulan\n");
+                txtOutput.append("Password\t\t: "+statusPassword+"\n");
 
                 if(checkBox.isSelected()){
                     txtOutput.append("WNA\t\t: Ya\n");
@@ -120,6 +155,12 @@ public class HelloRadioButton extends JFrame {
 
         this.add(labelTabungan);
         this.add(scrollPaneTabungan);   
+        this.add(labelFrekuensi);
+        this.add(spinnerFrekuensi);
+        this.add(labelPassword);
+        this.add(passwordField);
+        this.add(labelConfirmPassword);
+        this.add(confirmPasswordField);
         this.add(button);
         this.add(textField);
         this.add(textFieldNomorHP);
@@ -131,7 +172,7 @@ public class HelloRadioButton extends JFrame {
         this.add(labelInput);
         this.add(txtOutput);
 
-        this.setSize(600,620);
+        this.setSize(750,700);
         this.setLayout(null);
     }
 
