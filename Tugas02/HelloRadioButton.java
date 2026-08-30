@@ -33,12 +33,27 @@ public class HelloRadioButton extends JFrame {
 
         JCheckBox checkBox = new JCheckBox("Warga Negara Asing");
         checkBox.setBounds(15,235,350,30);
+        JLabel labelTabungan = new JLabel("Jenis Tabungan:");
+            labelTabungan.setBounds(15,265,350,20);
+
+            String[] jenisTabungan = {
+                "Tabungan 1",
+                "Tabungan 2",
+                "Tabungan 3",
+                "Tabungan 4"
+            };
+
+        JList<String> listTabungan = new JList<>(jenisTabungan);
+        listTabungan.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        JScrollPane scrollPaneTabungan = new JScrollPane(listTabungan);
+        scrollPaneTabungan.setBounds(15,290,200,80);
 
         JButton button = new JButton("Simpan");
-        button.setBounds(15,265,100,40);
+        button.setBounds(15,385,100,40);
 
         JTextArea txtOutput = new JTextArea("");
-        txtOutput.setBounds(15,310,550,100);
+        txtOutput.setBounds(15,430,550,100);
 
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -54,10 +69,12 @@ public class HelloRadioButton extends JFrame {
 
                 String nama = textField.getText();
                 String nomorHP = textFieldNomorHP.getText();
+                String tabungan = listTabungan.getSelectedValue();
 
                 txtOutput.append("Nama\t\t: "+nama+"\n");
-                txtOutput.append("Nomor HP\t: "+nomorHP+"\n");
-                txtOutput.append("Jenis Kelamin\t: "+jenisKelamin+"\n");
+                txtOutput.append("Nomor HP\t\t: "+nomorHP+"\n");
+                txtOutput.append("Jenis Kelamin\t\t: "+jenisKelamin+"\n");
+                txtOutput.append("Jenis Tabungan\t\t: "+tabungan+"\n");
 
                 if(checkBox.isSelected()){
                     txtOutput.append("WNA\t\t: Ya\n");
@@ -72,6 +89,8 @@ public class HelloRadioButton extends JFrame {
             }
         });
 
+        this.add(labelTabungan);
+        this.add(scrollPaneTabungan);   
         this.add(button);
         this.add(textField);
         this.add(textFieldNomorHP);
@@ -83,7 +102,7 @@ public class HelloRadioButton extends JFrame {
         this.add(labelInput);
         this.add(txtOutput);
 
-        this.setSize(600,500);
+        this.setSize(600,620);
         this.setLayout(null);
     }
 
