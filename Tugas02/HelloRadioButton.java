@@ -81,11 +81,23 @@ public class HelloRadioButton extends JFrame {
         JPasswordField confirmPasswordField = new JPasswordField();
         confirmPasswordField.setBounds(350,355,200,30);
 
+        JLabel labelTanggalLahir = new JLabel("Tanggal Lahir:");
+        labelTanggalLahir.setBounds(440,390,200,20);
+
+        SpinnerDateModel modelTanggalLahir = new SpinnerDateModel();
+        JSpinner spinnerTanggalLahir = new JSpinner(modelTanggalLahir);
+
+        JSpinner.DateEditor editorTanggalLahir =
+                new JSpinner.DateEditor(spinnerTanggalLahir, "dd-MM-yyyy");
+
+        spinnerTanggalLahir.setEditor(editorTanggalLahir);
+        spinnerTanggalLahir.setBounds(440,415,250,35);
+
         JButton button = new JButton("Simpan");
         button.setBounds(20, 455, 100, 40);
 
         JTextArea txtOutput = new JTextArea("");
-       txtOutput.setBounds(20, 510, 690, 125);
+       txtOutput.setBounds(20,510,690,220);
 
         menuExit.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -133,12 +145,17 @@ public class HelloRadioButton extends JFrame {
                     statusPassword = "Tidak Cocok";
                 }
 
+                String tanggalLahir =
+                ((JSpinner.DefaultEditor) spinnerTanggalLahir.getEditor())
+                .getTextField().getText();
+
                 txtOutput.append("Nama\t\t: "+nama+"\n");
                 txtOutput.append("Nomor HP\t\t: "+nomorHP+"\n");
                 txtOutput.append("Jenis Kelamin\t\t: "+jenisKelamin+"\n");
                 txtOutput.append("Jenis Tabungan\t\t: "+tabungan+"\n");
                 txtOutput.append("Frekuensi Transaksi\t: "+frekuensi+" kali/bulan\n");
                 txtOutput.append("Password\t\t: "+statusPassword+"\n");
+                txtOutput.append("Tanggal Lahir\t\t: "+tanggalLahir+"\n");
 
                 if(checkBox.isSelected()){
                     txtOutput.append("WNA\t\t: Ya\n");
@@ -161,6 +178,8 @@ public class HelloRadioButton extends JFrame {
         this.add(passwordField);
         this.add(labelConfirmPassword);
         this.add(confirmPasswordField);
+        this.add(labelTanggalLahir);
+        this.add(spinnerTanggalLahir);
         this.add(button);
         this.add(textField);
         this.add(textFieldNomorHP);
@@ -172,7 +191,7 @@ public class HelloRadioButton extends JFrame {
         this.add(labelInput);
         this.add(txtOutput);
 
-        this.setSize(750,700);
+        this.setSize(750,800);
         this.setLayout(null);
     }
 
