@@ -6,7 +6,7 @@ public class HelloWorldSwing {
         JFrame frame = new JFrame("HelloWorldSwing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel label = new JLabel("Hello World");
+        JLabel label = new JLabel("Hello Rafly");
         frame.getContentPane().add(label);
 
         frame.pack();
