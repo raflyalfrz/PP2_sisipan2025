@@ -5,6 +5,19 @@ public class HelloRadioButton extends JFrame {
 
     public HelloRadioButton(){
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu menu = new JMenu("Menu");
+
+        JMenuItem menuReset = new JMenuItem("Reset");
+        JMenuItem menuExit = new JMenuItem("Exit");
+
+        menu.add(menuReset);
+        menu.add(menuExit);
+
+        menuBar.add(menu);
+
+        this.setJMenuBar(menuBar);
 
         JLabel labelInput = new JLabel("Nama:");
         labelInput.setBounds(15,40,350,10);
@@ -54,6 +67,22 @@ public class HelloRadioButton extends JFrame {
 
         JTextArea txtOutput = new JTextArea("");
         txtOutput.setBounds(15,430,550,100);
+
+        menuExit.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                System.exit(0);
+            }
+        });
+        menuReset.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                textField.setText("");
+                textFieldNomorHP.setText("");
+                radioButton1.setSelected(true);
+                checkBox.setSelected(false);
+                listTabungan.clearSelection();
+                txtOutput.setText("");
+            }
+        });
 
         button.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
