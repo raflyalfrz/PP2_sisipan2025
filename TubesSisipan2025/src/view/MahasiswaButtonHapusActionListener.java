@@ -22,19 +22,40 @@ public class MahasiswaButtonHapusActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        Mahasiswa mahasiswa = new Mahasiswa();
+        if (mainFrame.getNpm().trim().isEmpty()) {
 
-        mahasiswa.setNpm(
-            mainFrame.getNpm()
-        );
+            JOptionPane.showMessageDialog(
+                mainFrame,
+                "Pilih data mahasiswa yang akan dihapus."
+            );
 
-        mahasiswaDao.delete(mahasiswa);
-        JOptionPane.showMessageDialog(
+            return;
+        }
+
+        int pilihan = JOptionPane.showConfirmDialog(
             mainFrame,
-            "Data mahasiswa berhasil dihapus."
+            "Apakah Anda yakin ingin menghapus data ini?",
+            "Konfirmasi Hapus",
+            JOptionPane.YES_NO_OPTION
         );
 
-        mainFrame.refreshData();
-        mainFrame.resetForm();
+        if (pilihan == JOptionPane.YES_OPTION) {
+
+            Mahasiswa mahasiswa = new Mahasiswa();
+
+            mahasiswa.setNpm(
+                mainFrame.getNpm()
+            );
+
+            mahasiswaDao.delete(mahasiswa);
+
+            JOptionPane.showMessageDialog(
+                mainFrame,
+                "Data mahasiswa berhasil dihapus."
+            );
+
+            mainFrame.refreshData();
+            mainFrame.resetForm();
+        }
     }
 }
