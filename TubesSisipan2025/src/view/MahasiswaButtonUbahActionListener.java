@@ -20,7 +20,19 @@ public class MahasiswaButtonUbahActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (!mainFrame.isDataDipilih()) {
+
+            JOptionPane.showMessageDialog(
+                mainFrame,
+                "Pilih data mahasiswa yang akan diubah terlebih dahulu.",
+                "Peringatan",
+                JOptionPane.WARNING_MESSAGE
+            );
+
+            return;
+        }
         if (!mainFrame.validasiInput()) {
+            
             return;
         }
 

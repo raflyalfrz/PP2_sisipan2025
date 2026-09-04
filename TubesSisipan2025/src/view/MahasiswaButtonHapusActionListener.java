@@ -22,11 +22,13 @@ public class MahasiswaButtonHapusActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (mainFrame.getNpm().trim().isEmpty()) {
+        if (!mainFrame.isDataDipilih()) {
 
             JOptionPane.showMessageDialog(
                 mainFrame,
-                "Pilih data mahasiswa yang akan dihapus."
+                "Pilih data mahasiswa yang akan dihapus terlebih dahulu.",
+                "Peringatan",
+                JOptionPane.WARNING_MESSAGE
             );
 
             return;

@@ -36,60 +36,113 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
 
+        this.getContentPane().setBackground(
+            new java.awt.Color(245, 247, 250)
+        );
+
         mahasiswaDao = new MahasiswaDao();
 
-        JLabel labelJudul = new JLabel("Data Mahasiswa");
-        labelJudul.setBounds(20, 20, 200, 30);
+        JLabel labelJudul =
+            new JLabel("DATA MAHASISWA");
+
+        labelJudul.setBounds(
+            30, 20, 300, 35
+        );
+
+        labelJudul.setFont(
+            new java.awt.Font(
+                "SansSerif",
+                java.awt.Font.BOLD,
+                22
+            )
+        );
+
+        JLabel labelSubJudul =
+            new JLabel(
+                "Sistem Pengelolaan Data Mahasiswa"
+            );
+
+        labelSubJudul.setBounds(
+            30, 52, 350, 25
+        );
+
+        labelSubJudul.setFont(
+            new java.awt.Font(
+                "SansSerif",
+                java.awt.Font.PLAIN,
+                12
+            )
+        );
 
         JLabel labelNpm = new JLabel("NPM");
-        labelNpm.setBounds(20, 70, 100, 25);
+        labelNpm.setBounds(30, 100, 120, 35);
 
         txtNpm = new JTextField();
-        txtNpm.setBounds(130, 70, 220, 25);
+        txtNpm.setBounds(160, 100, 300, 30);
 
         JLabel labelNama = new JLabel("Nama");
-        labelNama.setBounds(20, 110, 100, 25);
+        labelNama.setBounds(30, 140, 120, 30);
 
         txtNama = new JTextField();
-        txtNama.setBounds(130, 110, 220, 25);
+        txtNama.setBounds(160, 140, 300, 30);
 
         JLabel labelProdi = new JLabel("Program Studi");
-        labelProdi.setBounds(20, 150, 100, 25);
+        labelProdi.setBounds(30, 180, 120, 30);
 
         txtProdi = new JTextField();
-        txtProdi.setBounds(130, 150, 220, 25);
+        txtProdi.setBounds(160, 180, 300, 30);
 
         JLabel labelSemester = new JLabel("Semester");
-        labelSemester.setBounds(20, 190, 100, 25);
+        labelSemester.setBounds(30, 220, 120, 30);
 
         txtSemester = new JTextField();
-        txtSemester.setBounds(130, 190, 220, 25);
+        txtSemester.setBounds(160, 220, 300, 30);
 
         JLabel labelAlamat = new JLabel("Alamat");
-        labelAlamat.setBounds(20, 230, 100, 25);
+        labelAlamat.setBounds(30, 260, 120, 30);
 
         txtAlamat = new JTextField();
-        txtAlamat.setBounds(130, 230, 220, 25);
+        txtAlamat.setBounds(160, 260, 300, 30);
 
-        JLabel lblCari = new JLabel("Cari Mahasiswa");
-        lblCari.setBounds(430, 280, 110, 30);
+        JLabel labelDaftar =
+            new JLabel("Daftar Mahasiswa");
+
+        labelDaftar.setBounds(
+            30, 385, 200, 30
+        );
+
+        labelDaftar.setFont(
+            new java.awt.Font(
+                "SansSerif",
+                java.awt.Font.BOLD,
+                16
+            )
+        );
+
+        JLabel lblCari = new JLabel("Cari");
+        lblCari.setBounds(530, 385, 400, 30);
         add(lblCari);
 
         txtCari = new JTextField();
-        txtCari.setBounds(540, 280, 220, 30);
+        txtCari.setBounds(570, 385, 280, 30);
         add(txtCari);
 
         btnSimpan = new JButton("Simpan");
-        btnSimpan.setBounds(20, 280, 90, 30);
+        btnSimpan.setBounds(30, 315, 100, 35);
 
         btnUbah = new JButton("Ubah");
-        btnUbah.setBounds(120, 280, 90, 30);
+        btnUbah.setBounds(140,315, 100, 35);
 
         btnHapus = new JButton("Hapus");
-        btnHapus.setBounds(220, 280, 90, 30);
+        btnHapus.setBounds(250, 315, 100, 35);
 
         btnReset = new JButton("Reset");
-        btnReset.setBounds(320, 280, 90, 30);
+        btnReset.setBounds(360, 315, 100, 35);
+
+        btnSimpan.setFocusPainted(false);
+        btnUbah.setFocusPainted(false);
+        btnHapus.setFocusPainted(false);
+        btnReset.setFocusPainted(false);
 
         MahasiswaButtonSimpanActionListener simpanActionListener =
             new MahasiswaButtonSimpanActionListener(
@@ -139,6 +192,21 @@ public class MainFrame extends JFrame {
 
         modelTable = new DefaultTableModel(namaKolom, 0);
         tableMahasiswa = new JTable(modelTable);
+
+        tableMahasiswa.setRowHeight(28);
+
+        tableMahasiswa.getTableHeader().setFont(
+            new java.awt.Font(
+                "SansSerif",
+                java.awt.Font.BOLD,
+                12
+            )
+        );
+
+        tableMahasiswa.setSelectionMode(
+            ListSelectionModel.SINGLE_SELECTION
+        );
+
         rowSorter = new TableRowSorter<>(modelTable);
 
         tableMahasiswa.setRowSorter(
@@ -210,9 +278,10 @@ public class MainFrame extends JFrame {
         JScrollPane scrollTable =
             new JScrollPane(tableMahasiswa);
 
-        scrollTable.setBounds(20, 340, 740, 200);
+        scrollTable.setBounds(30, 425, 820, 240);
 
         this.add(labelJudul);
+        this.add(labelSubJudul);
 
         this.add(labelNpm);
         this.add(txtNpm);
@@ -233,12 +302,13 @@ public class MainFrame extends JFrame {
         this.add(btnUbah);
         this.add(btnHapus);
         this.add(btnReset);
-
+        this.add(labelDaftar);
         this.add(scrollTable);
 
         loadData();
 
-        this.setSize(800, 600);
+        this.setSize(900, 730);
+        this.setResizable(false);
         this.setLocationRelativeTo(null);
     }
 
