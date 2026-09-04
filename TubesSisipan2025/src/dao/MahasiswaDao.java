@@ -3,11 +3,11 @@ package dao;
 import db.MySqlConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import model.Mahasiswa;
 
 public class MahasiswaDao {
@@ -140,5 +140,42 @@ public class MahasiswaDao {
         }
 
         return list;
+    }
+
+    public boolean isNpmExists(String npm) {
+
+        boolean exists = false;
+
+        String sql =
+            "select npm from mahasiswa where npm = ?";
+
+        try {
+
+            Connection connection =
+                MySqlConnection
+                    .getInstance()
+                    .getConnection();
+
+            PreparedStatement statement =
+                connection.prepareStatement(sql);
+
+            statement.setString(1, npm);
+
+            ResultSet resultSet =
+                statement.executeQuery();
+
+            if (resultSet.next()) {
+                exists = true;
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return exists;
     }
 }

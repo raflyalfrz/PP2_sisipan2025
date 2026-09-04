@@ -21,7 +21,30 @@ public class MahasiswaButtonSimpanActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
 
+        if (mainFrame.isDataDipilih()) {
+
+            JOptionPane.showMessageDialog(
+                mainFrame,
+                "Data sedang dipilih. Gunakan tombol Ubah untuk mengubah data atau Reset untuk menambahkan data baru."
+            );
+
+            return;
+        }
+
         if (!mainFrame.validasiInput()) {
+            return;
+        }
+
+        if (mahasiswaDao.isNpmExists(
+                mainFrame.getNpm())) {
+
+            JOptionPane.showMessageDialog(
+                mainFrame,
+                "NPM sudah terdaftar. Gunakan NPM lain.",
+                "Peringatan",
+                JOptionPane.WARNING_MESSAGE
+            );
+
             return;
         }
 
@@ -47,13 +70,26 @@ public class MahasiswaButtonSimpanActionListener
             mainFrame.getAlamat()
         );
 
-        mahasiswaDao.insert(mahasiswa);
+        int hasil =
+            mahasiswaDao.insert(mahasiswa);
 
-        mainFrame.addMahasiswa(mahasiswa);
+        if (hasil > 0) {
 
-        JOptionPane.showMessageDialog(
-            mainFrame,
-            "Data mahasiswa berhasil ditambahkan."
-        );
+            mainFrame.addMahasiswa(mahasiswa);
+
+            JOptionPane.showMessageDialog(
+                mainFrame,
+                "Data mahasiswa berhasil ditambahkan."
+            );
+
+        } else {
+
+            JOptionPane.showMessageDialog(
+                mainFrame,
+                "Data mahasiswa gagal ditambahkan.",
+                "Gagal",
+                JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 }

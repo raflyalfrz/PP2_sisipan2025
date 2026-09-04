@@ -5,6 +5,9 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import model.Mahasiswa;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
 
 public class MainFrame extends JFrame {
 
@@ -13,6 +16,7 @@ public class MainFrame extends JFrame {
     private JTextField txtProdi;
     private JTextField txtSemester;
     private JTextField txtAlamat;
+    private JTextField txtCari;
 
     private JButton btnSimpan;
     private JButton btnUbah;
@@ -21,8 +25,10 @@ public class MainFrame extends JFrame {
 
     private JTable tableMahasiswa;
     private DefaultTableModel modelTable;
+    private TableRowSorter<DefaultTableModel> rowSorter;
 
     private MahasiswaDao mahasiswaDao;
+    private boolean dataDipilih = false;
 
     public MainFrame() {
 
@@ -64,6 +70,14 @@ public class MainFrame extends JFrame {
 
         txtAlamat = new JTextField();
         txtAlamat.setBounds(130, 230, 220, 25);
+
+        JLabel lblCari = new JLabel("Cari Mahasiswa");
+        lblCari.setBounds(430, 280, 110, 30);
+        add(lblCari);
+
+        txtCari = new JTextField();
+        txtCari.setBounds(540, 280, 220, 30);
+        add(txtCari);
 
         btnSimpan = new JButton("Simpan");
         btnSimpan.setBounds(20, 280, 90, 30);
@@ -113,6 +127,8 @@ public class MainFrame extends JFrame {
             }
         });
 
+        
+
         String[] namaKolom = {
             "NPM",
             "Nama",
@@ -123,6 +139,30 @@ public class MainFrame extends JFrame {
 
         modelTable = new DefaultTableModel(namaKolom, 0);
         tableMahasiswa = new JTable(modelTable);
+        rowSorter = new TableRowSorter<>(modelTable);
+
+        tableMahasiswa.setRowSorter(
+            rowSorter
+        );
+        txtCari.getDocument().addDocumentListener(
+            new DocumentListener() {
+
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    cariData();
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    cariData();
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    cariData();
+                }
+            }
+        );
 
         tableMahasiswa.addMouseListener(
             new java.awt.event.MouseAdapter() {
@@ -130,8 +170,17 @@ public class MainFrame extends JFrame {
                 public void mouseClicked(
                         java.awt.event.MouseEvent e) {
 
-                    int baris =
+                    int barisView =
                         tableMahasiswa.getSelectedRow();
+
+                    if (barisView == -1) {
+                        return;
+                    }
+
+                    int baris =
+                        tableMahasiswa.convertRowIndexToModel(
+                            barisView
+                        );
 
                     txtNpm.setText(
                         modelTable.getValueAt(baris, 0).toString()
@@ -152,6 +201,8 @@ public class MainFrame extends JFrame {
                     txtAlamat.setText(
                         modelTable.getValueAt(baris, 4).toString()
                     );
+
+                    dataDipilih = true;
                 }
             }
         );
@@ -234,6 +285,10 @@ public class MainFrame extends JFrame {
         return txtAlamat.getText();
     }
 
+    public boolean isDataDipilih() {
+        return dataDipilih;
+    }
+
     public void addMahasiswa(Mahasiswa mahasiswa) {
 
         Object[] data = {
@@ -251,6 +306,7 @@ public class MainFrame extends JFrame {
         txtProdi.setText("");
         txtSemester.setText("");
         txtAlamat.setText("");
+        dataDipilih = false;
     }
 
     public void refreshData() {
@@ -264,6 +320,7 @@ public class MainFrame extends JFrame {
         txtProdi.setText("");
         txtSemester.setText("");
         txtAlamat.setText("");
+        dataDipilih = false;
     }
 
     public boolean validasiInput() {
@@ -345,6 +402,25 @@ public class MainFrame extends JFrame {
         }
 
         return true;
+    }
+
+    private void cariData() {
+
+        String kataKunci =
+            txtCari.getText().trim();
+
+        if (kataKunci.isEmpty()) {
+
+            rowSorter.setRowFilter(null);
+
+        } else {
+
+            rowSorter.setRowFilter(
+                RowFilter.regexFilter(
+                    "(?i)" + kataKunci
+                )
+            );
+        }
     }
     
 
